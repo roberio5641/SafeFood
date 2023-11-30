@@ -1,0 +1,12 @@
+res://scenes/level.tscn
+res://scripts/player.gd
+res://scenes/player.tscn
+res://scenes/enemie.tscn
+res://hit_box.tscn
+res://scenes/milk_level.tscn
+res://scenes/apple.tscn
+res://scripts/level.gd
+res://scenes/level2.tscn
+res://scripts/Camera2D.gd
+res://scripts/Primeiro_Mapa.gd
+res://scripts/apple.gd

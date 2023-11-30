@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://uobiwmyt6tg5"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_uwah3"]
+[ext_resource type="Texture2D" uid="uid://ckqlujm0ndhjn" path="res://assets/Tilemap/tilemap-characters_packed.png" id="2_dsh2t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4il7m"]
+atlas = ExtResource("2_dsh2t")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eta2v"]
+atlas = ExtResource("2_dsh2t")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqv1w"]
+atlas = ExtResource("2_dsh2t")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cq71"]
+atlas = ExtResource("2_dsh2t")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jn6um"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4il7m")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eta2v")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqv1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cq71")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl2e4"]
+size = Vector2(27, 39.25)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tdby4"]
+radius = 21.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 22
+script = ExtResource("1_uwah3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 1)
+scale = Vector2(1.84615, 1.72973)
+sprite_frames = SubResource("SpriteFrames_jn6um")
+animation = &"walk"
+offset = Vector2(-1.4593, 1.35296)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3.5, 4.375)
+shape = SubResource("RectangleShape2D_gl2e4")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-4, 0)
+shape = SubResource("CircleShape2D_tdby4")
+debug_color = Color(0.847059, 0.254902, 0.698039, 0.419608)
+
+[node name="Remote" type="RemoteTransform2D" parent="."]
+
+[node name="Ray_Right" type="RayCast2D" parent="."]
+position = Vector2(9, 12)
+target_position = Vector2(10, 0)
+collision_mask = 4
+
+[node name="Ray_Left" type="RayCast2D" parent="."]
+position = Vector2(-16, 12)
+target_position = Vector2(-11, 0)
+collision_mask = 4
+
+[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
